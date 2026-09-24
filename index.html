@@ -251,6 +251,18 @@
     font-size:.86rem;
   }
   .goal-box .row{display:flex;justify-content:space-between;gap:10px;padding:3px 0;}
+  .intro-hero .stack p{margin:0;}
+  .story-note{
+    position:relative;align-self:start;
+    background:var(--panel);border:1px solid var(--line);border-radius:6px;
+    box-shadow:var(--shadow);padding:26px 22px 20px;transform:rotate(1.2deg);
+    font-size:.95rem;
+  }
+  .story-note p{margin:0 0 10px;color:var(--ink);font-style:italic;}
+  .story-note .sig{text-align:right;font-weight:700;margin-bottom:0;}
+  .story-note .pin{position:absolute;top:-8px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--accent);box-shadow:0 2px 4px rgba(0,0,0,.3);}
+  .story-note .note-key{position:absolute;left:18px;bottom:12px;width:34px;height:34px;color:var(--gold);}
+  @media (prefers-reduced-motion:reduce){.story-note{transform:none;}}
   .badge-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
   .badge-list li{
     display:flex;gap:10px;align-items:flex-start;
@@ -830,29 +842,25 @@
     <section class="screen" id="screen-intro">
       <div class="card intro-hero">
         <div class="stack">
-          <div class="eyebrow">Willkommen im Forscherlabor</div>
-          <h2>Die Tür zur Forscherwerkstatt ist verschlossen.</h2>
-          <p>Vier Rätsel versperren euch den Weg. Jedes Rätsel prüft, was ihr über Laborgeräte, Gefahrensymbole und die Regeln im Chemieraum wisst — und belohnt euch mit einem dreistelligen Code. Am Ende addiert ihr alle vier Codes zu einem vierstelligen Schlosscode und öffnet die Schatzkiste.</p>
-          <p><strong>Die Reihenfolge ist euch überlassen</strong> — bearbeitet die Rätsel, wie ihr wollt.</p>
+          <div class="eyebrow">Nach Unterrichtsschluss</div>
+          <h2>Eingeschlossen im Chemielabor!</h2>
+          <p>Ihr habt nach der Stunde noch aufgeräumt — und plötzlich ist die Labortür abgeschlossen. Der Schlüssel liegt in einer Schatzkiste auf dem Arbeitstisch, gesichert mit einem vierstelligen Zahlenschloss. Auf dem Tisch findet ihr eine Notiz.</p>
+          <p>Seht euch im Labor gut um: Nur wer sich mit Laborgeräten, Gefahrensymbolen und den Regeln im Chemieraum auskennt, kommt hier wieder heraus. <strong>Ihr habt 30 Minuten.</strong></p>
           <div class="name-field">
             <label for="team-name-input">Euer Teamname</label>
             <input type="text" id="team-name-input" placeholder="z. B. Die Erlenmeyer-Elfen" maxlength="30">
           </div>
           <div class="btn-row">
-            <button class="btn accent" id="btn-start">Rätsel öffnen</button>
+            <button class="btn accent" id="btn-start">Ins Labor</button>
           </div>
         </div>
-        <div class="goal-box">
-          <div class="eyebrow" style="margin-bottom:8px;">Missionsziel</div>
-          <div class="row"><span>Rätsel 1 – Laborgeräte</span><span>✏️</span></div>
-          <div class="row"><span>Rätsel 2 – Verhalten im Chemieraum</span><span>🧵</span></div>
-          <div class="row"><span>Rätsel 3 – Geräte &amp; Gefahrensymbole</span><span>🧩</span></div>
-          <div class="row"><span>Rätsel 4 – Regeln im Chemieraum</span><span>💡</span></div>
-          <hr class="divider" style="margin:12px 0;">
-          <ul class="badge-list">
-            <li><svg><use href="#ic-chest"/></svg><span>4 Codes → Summe → Schatzkiste öffnen</span></li>
-            <li><svg><use href="#ic-scroll"/></svg><span>Am Ende winkt eine Forscher-Urkunde</span></li>
-          </ul>
+        <div class="story-note" aria-label="Notiz der Laborleitung">
+          <span class="pin" aria-hidden="true"></span>
+          <p>Liebe Forscherinnen und Forscher,</p>
+          <p>den Schlüssel für die Tür habe ich in die Schatzkiste gelegt. Das Zahlenschloss öffnet ihr nur, wenn ihr euch im Labor wirklich auskennt: <strong>Vier Dinge in diesem Raum</strong> verbergen je einen dreistelligen Code. Zusammengezählt ergeben sie die Kombination.</p>
+          <p>Wer es rechtzeitig hinausschafft, bekommt eine Forscher-Urkunde.</p>
+          <p class="sig">— Eure Laborleitung</p>
+          <svg class="note-key" aria-hidden="true" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="24" r="8"/><path d="M22 24h20M36 24v6M41 24v4"/></g></svg>
         </div>
       </div>
     </section>
@@ -862,7 +870,7 @@
       <div class="card">
         <div class="puzzle-head">
           <div>
-            <div class="eyebrow">Forscherwerkstatt</div>
+            <div class="eyebrow">Chemielabor · Tür verschlossen</div>
             <h2 style="font-size:1.7rem;">Seht euch im Labor um</h2>
           </div>
           <button class="btn ghost" id="btn-reset" title="Fortschritt zurücksetzen">Neu starten</button>
@@ -1229,8 +1237,9 @@
     <section class="screen" id="screen-success" hidden>
       <div class="card">
         <div class="eyebrow">Geschafft</div>
-        <h2 style="font-size:1.8rem;margin:6px 0 14px;">Herzlichen Glückwunsch! Ihr habt es geschafft!</h2>
-        <p>Fast geschafft: Für die Forscherwerkstatt gibt es noch eine Bonusaufgabe zu einer chemischen Reaktion, bei der viel Wärme entsteht. Eure Lehrkraft kann hier ein eigenes Video verlinken.</p>
+        <h2 style="font-size:1.8rem;margin:6px 0 14px;">Die Tür ist offen — ihr seid frei!</h2>
+        <p>Mit dem Schlüssel aus der Schatzkiste habt ihr die Labortür aufgeschlossen. Herzlichen Glückwunsch — ihr kennt euch im Chemielabor wirklich aus!</p>
+        <p>Noch Zeit übrig? Dann gibt es eine Bonusaufgabe zu einer chemischen Reaktion, bei der viel Wärme entsteht. Eure Lehrkraft kann hier ein eigenes Video verlinken.</p>
         <div class="bonus-box no-print">
           <label for="bonus-link" style="font-weight:700;font-size:.85rem;">Video-Link (für Lehrkräfte, optional)</label><br>
           <input type="text" id="bonus-link" placeholder="https://…">
@@ -2295,9 +2304,9 @@
     var fb = $('#feedback-lock');
     fb.classList.add('show');
     if(entered.length === 4 && entered === target){
-      fb.textContent = 'Das Schloss öffnet sich …';
+      fb.textContent = 'Klick! Die Kiste springt auf — darin liegt der Türschlüssel …';
       fb.className='feedback show ok';
-      setTimeout(function(){ showScreen('screen-success'); initSuccess(); }, 500);
+      setTimeout(function(){ showScreen('screen-success'); initSuccess(); }, 1200);
     } else {
       fb.textContent = 'Das stimmt noch nicht. Prüft eure Summe noch einmal.';
       fb.className='feedback show bad';
