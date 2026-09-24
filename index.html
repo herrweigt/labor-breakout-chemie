@@ -2,12 +2,13 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Labor-Breakout</title>
+</head>
+<body>
 <title>Labor-Breakout</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
-</head>
-<body>
 <style>
   :root{
     --paper:#eef1e6;
@@ -149,6 +150,12 @@
     padding:5px 12px;
     color:var(--ink-soft);
   }
+  .timer-chip{display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums;}
+  .timer-chip svg{width:14px;height:14px;flex:none;}
+  .timer-chip.warn{background:var(--gold-soft);border-color:var(--gold);color:var(--gold);}
+  .timer-chip.danger{background:var(--danger-soft);border-color:var(--danger);color:var(--danger);animation:timer-pulse 1s ease-in-out infinite;}
+  @keyframes timer-pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+  @media (prefers-reduced-motion:reduce){.timer-chip.danger{animation:none;}}
 
   /* ---------- screens ---------- */
   .screen{animation:rise .35s ease both;}
@@ -680,6 +687,7 @@
   <symbol id="ic-bulb" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 6a13 13 0 00-7 24c1.6 1.1 2.6 2.6 2.6 4.4V37h8.8v-2.6c0-1.8 1-3.3 2.6-4.4A13 13 0 0024 6z"/><path d="M19.5 42h9M21 46h6"/></g></symbol>
   <symbol id="ic-chest" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M6 20h36v18a2 2 0 01-2 2H8a2 2 0 01-2-2V20z"/><path d="M6 20l3-9a2 2 0 012-2h26a2 2 0 012 2l3 9"/><rect x="20" y="21" width="8" height="7" rx="1.5"/></g></symbol>
   <symbol id="ic-scroll" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M12 8h24v30a4 4 0 01-4 4H12"/><path d="M12 8a4 4 0 00-4 4v24a4 4 0 004 4"/><path d="M18 18h14M18 25h14M18 32h9"/></g></symbol>
+  <symbol id="ic-clock" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="25" r="17"/><path d="M24 15v10l7 5"/><path d="M18 4h12"/></g></symbol>
 
   <!-- lab equipment -->
   <symbol id="ic-erlenmeyer" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M20 6h8v10l10 22a2 2 0 01-2 3H12a2 2 0 01-2-3l10-22z"/><path d="M17 6h14"/><path d="M14 32h20"/></g></symbol>
@@ -783,6 +791,7 @@
         <span class="dot" data-p="4"></span>
       </div>
       <span class="team-chip" id="team-chip">Team: —</span>
+      <span class="team-chip timer-chip" id="timer-chip" aria-label="Verbleibende Zeit"><svg><use href="#ic-clock"/></svg><span class="digits">25:00</span></span>
     </div>
   </header>
 
@@ -916,27 +925,26 @@
           </div>
           <div class="code-capsule" id="code-cap-2"><svg style="width:16px;height:16px;"><use href="#ic-chest"/></svg><span class="digits">— — —</span></div>
         </div>
-        <p>Entscheidet bei jeder Aussage, ob sie zutrifft oder nicht — und wählt dann das passende Elementsymbol. Diese Tabelle zeigt, welche Spalte was bedeutet:</p>
+        <p>Entscheidet bei jeder Aussage, ob sie zutrifft oder nicht — und wählt dann das passende Zeichen. Diese Tabelle zeigt, welche Spalte was bedeutet:</p>
         <div class="legend-table">
           <div class="legend-col"><span class="legend-swatch ok">✓</span><span><strong>Linke Spalte</strong> — Aussage stimmt</span></div>
           <div class="legend-col"><span class="legend-swatch bad">✗</span><span><strong>Rechte Spalte</strong> — Aussage stimmt nicht</span></div>
         </div>
-        <p>Die richtig gewählten Symbole ergeben nacheinander einen Lösungssatz — und zugleich neun Elementsymbole.</p>
+        <p>Merkt euch die Zeichen, die ihr bei den richtigen Antworten wählt — sie sind der Schlüssel zum Code dieses Rätsels.</p>
         <div class="stack" id="statements" style="gap:0;"></div>
         <div class="btn-row" style="margin-top:16px;">
           <button class="btn accent" id="btn-check-2">Prüfen</button>
           <span class="feedback" id="feedback-2"></span>
         </div>
         <div class="success-panel" id="success-2">
-          <h3>Lösungssatz gefunden! 🎉</h3>
+          <h3>Alle Aussagen richtig bewertet! 🎉</h3>
           <div class="solution-strip" id="solution-strip"></div>
-          <p>Diese Buchstaben sind zugleich Elementsymbole. Ermittelt mithilfe des Periodensystems die Ordnungszahlen und addiert sie:</p>
-          <div class="periodic-ref" id="periodic-ref"></div>
+          <p>Das sind eure neun richtig gewählten Zeichen, in der Reihenfolge der Aussagen. Was fällt euch auf? Ermittelt daraus den dreistelligen Code:</p>
           <div class="sum-row">
-            <label for="sum-input"><strong>Summe der Ordnungszahlen:</strong></label>
-            <input type="number" id="sum-input" inputmode="numeric">
-            <button class="btn accent" id="btn-check-sum">Prüfen</button>
-            <span class="feedback" id="feedback-sum"></span>
+            <label for="p2-code-input"><strong>Code:</strong></label>
+            <input type="text" inputmode="numeric" maxlength="3" id="p2-code-input" style="width:90px;letter-spacing:.2em;">
+            <button class="btn accent" id="btn-check-p2code">Prüfen</button>
+            <span class="feedback" id="feedback-p2code"></span>
           </div>
           <div id="p2-final" hidden>
             <p>Richtig! Der Code lautet <strong class="mono">130</strong>.</p>
@@ -957,7 +965,7 @@
           </div>
           <div class="code-capsule" id="code-cap-3"><svg style="width:16px;height:16px;"><use href="#ic-chest"/></svg><span class="digits">— — —</span></div>
         </div>
-        <p>Jeder Stein hat auf der einen Seite ein <strong>Bild</strong>, auf der anderen einen <strong>Begriff</strong>. Baut die Kette: Klickt die Steine so nacheinander an, dass an jeder Nahtstelle Bild und Begriff zum <strong>gleichen</strong> Gegenstand gehören. Die Kette verläuft nicht immer gerade — manche Steine knicken um 90° ab, genau wie bei den Papiersteinen im Original. An den beiden Enden jeder Kette bleibt je eine Seite ohne Gegenstück übrig. <strong>Schaut euch die fertige Form jeder Kette an: Sie ergibt eine Ziffer.</strong> Die drei Ziffern ergeben zusammen den Code für dieses Spiel.</p>
+        <p>Jeder Stein hat auf der einen Seite ein <strong>Bild</strong>, auf der anderen einen <strong>Begriff</strong>. Baut die Kette: Klickt die Steine so nacheinander an, dass an jeder Nahtstelle Bild und Begriff zum <strong>gleichen</strong> Gegenstand gehören. Die Kette verläuft nicht immer gerade — manche Steine knicken um 90° ab. An den beiden Enden jeder Kette bleibt je eine Seite ohne Gegenstück übrig. <strong>Schaut euch die fertige Form jeder Kette an: Sie ergibt eine Ziffer.</strong> Die drei Ziffern ergeben zusammen den Code für dieses Spiel.</p>
 
         <div class="set-title"><h3>Spiel ◆ Grundausstattung</h3><span class="set-digit" id="digit-set1">?</span></div>
         <div class="domino-set" id="set1"></div>
@@ -1140,17 +1148,14 @@
     {text:'Im Chemieraum darf ich nicht essen und nicht trinken.', correct:true, symbol:'S', distractor:'Cu'}
   ];
   var ATOMIC = {H:1,C:6,P:15,S:16,I:53};
-  var SUM_TARGET = STATEMENTS.reduce(function(s,st){return s+ATOMIC[st.symbol];},0); // 130
+  // CODES.p2 (130) = Summe von ATOMIC[st.symbol] über alle STATEMENTS — die
+  // Rätsellösenden sollen selbst erkennen, dass die richtig gewählten Zeichen
+  // Elementsymbole sind, und die Summe der Ordnungszahlen bilden (Code wird
+  // nicht mehr direkt vorgerechnet, s. u.).
 
   // Schrank-Nummern je Lücke (gleiche Reihenfolge wie BLANK_ANSWERS) — Summe 106
   var CABINET_NUMBERS = [3,9,5,8,11,7,4,6,10,5,9,12,8,9];
   var CABINET_TARGET = CABINET_NUMBERS.reduce(function(a,b){return a+b;},0); // 106
-
-  var SOLUTION_TOKENS = [
-    {b:0},{b:1},{g:'E'},{g:'M'},{b:2},{g:'E'},{sp:1},
-    {g:'M'},{g:'A'},{b:3},{b:4},{g:'T'},{sp:1},
-    {b:5},{b:6},{g:'A'},{b:7},{b:8},{g:'!'}
-  ];
 
   /* Domino-Steine (Rätsel 3): jede Seite ist entweder ein Begriff (TH) oder ein
      Bild (IH) desselben Gegenstands, jeweils mit fester Rasterposition [x,y] —
@@ -1159,6 +1164,21 @@
   function TH(id,label,x,y){ return {id:id, type:'text', label:label, cell:[x,y]}; }
   function IH(id,label,icon,x,y){ return {id:id, type:'img', label:label, icon:icon, cell:[x,y]}; }
 
+  /* Jedes Set enthält zusätzlich ein paar "Ablenker"-Steine (legit:false).
+     Sie sehen wie echte Laborbegriffe/-symbole aus — und EINE ihrer beiden
+     Hälften trägt absichtlich dieselbe interne Kennung wie ein echtes
+     Zwischenglied der Kette (Wort und Bild bleiben dabei bewusst
+     UNTERSCHIEDLICH, z. B. "Reagenzglas" statt "Reagenzglashalter"). Dadurch
+     lässt sich der Ablenker genau dann anlegen, wenn die passende offene
+     Stelle der Kette gerade frei ist — die Platzierung ist also nicht mehr
+     reihenfolgeunabhängig garantiert richtig. Seine andere Hälfte führt
+     dagegen ins Leere (keine Gegenstelle im Set), sodass die Kette an dieser
+     Stelle nicht mehr zu Ende gebaut werden kann und der passende echte
+     Stein blockiert bleibt: Wer nicht wirklich Bild und Begriff vergleicht,
+     sondern einfach der Reihe nach alles anklickt, kann so eine Kette bauen,
+     aus der am Ende KEINE gültige Ziffer entsteht, und muss über "Kette
+     zurücksetzen" neu beginnen. (Reale Steine ohne explizites legit-Feld
+     gelten als legit:true.) */
   var SET1 = { // ◆ Grundausstattung — Marker: Dreieck
     marker:'triangle',
     tiles:[
@@ -1168,7 +1188,9 @@
       {halves:[IH('drahtnetz','Draht­netz','ic-drahtnetz',2,2), TH('dreifuss','Dreifuß',1,2)]},
       {halves:[IH('dreifuss','Dreifuß','ic-dreifuss',1,3), TH('becherglas','Becher­glas',1,4)]},
       {halves:[IH('becherglas','Becher­glas','ic-becherglas',1,5), TH('abdampfschale','Abdampf­schale',2,5)]},
-      {halves:[IH('abdampfschale','Abdampf­schale','ic-abdampfschale',3,5), TH('pipette','Pipette',4,5)]}
+      {halves:[IH('abdampfschale','Abdampf­schale','ic-abdampfschale',3,5), TH('pipette','Pipette',4,5)]},
+      {halves:[TH('becherglas','Becherglas­halter',1,4), IH('d1a-dead','Pistill','ic-pistill',1,3)], legit:false},
+      {halves:[TH('abdampfschale','Abdampf­löffel',2,5), IH('d1b-dead','Spatel­löffel','ic-spatel',1,5)], legit:false}
     ]
   };
   var SET2 = { // ■ Gefahrensymbole — Marker: Quadrat
@@ -1177,7 +1199,9 @@
       {halves:[IH('entzuendlich','entzündlich','ic-ghs-entzuendlich',0,0), TH('umwelt','umwelt­gefährlich',0,1)]},
       {halves:[IH('umwelt','umwelt­gefährlich','ic-ghs-umwelt',0,2), TH('aetzend','ätzend',0,3)]},
       {halves:[IH('aetzend','ätzend','ic-ghs-aetzend',0,4), TH('achtung','Achtung (allgemeine Warnung)',0,5)]},
-      {halves:[IH('achtung','Achtung (allgemeine Warnung)','ic-ghs-achtung',0,6), TH('toxisch','toxisch',0,7)]}
+      {halves:[IH('achtung','Achtung (allgemeine Warnung)','ic-ghs-achtung',0,6), TH('toxisch','toxisch',0,7)]},
+      {halves:[IH('umwelt','giftig','ic-ghs-giftig',0,2), TH('d2a-dead','krebserregend',0,3)], legit:false},
+      {halves:[IH('aetzend','explosionsgefährlich','ic-ghs-explosiv',0,4), TH('d2b-dead','reizend',0,5)], legit:false}
     ]
   };
   var SET3 = { // ● Werkzeuge — Marker: Kreis
@@ -1189,7 +1213,9 @@
       {halves:[TH('spatel','Spatel­löffel',1,2), TH('trichter','Trichter',2,2)]},
       {halves:[IH('spatel','Spatel­löffel','ic-spatel',1,3), TH('tiegelzange','Tiegel­zange',1,4)]},
       {halves:[IH('tiegelzange','Tiegel­zange','ic-tiegelzange',2,4), IH('brenner','Brenner','ic-brenner',3,4)]},
-      {halves:[TH('brenner','Brenner',4,4), TH('messzylinder','Messzylinder',5,4)]}
+      {halves:[TH('brenner','Brenner',4,4), TH('messzylinder','Messzylinder',5,4)]},
+      {halves:[IH('spatel','Becherglas','ic-becherglas',1,3), TH('d3a-dead','Draht­netz',1,4)], legit:false},
+      {halves:[TH('tiegelzange','Abdampf­schale',1,4), IH('d3b-dead','Dreifuß','ic-dreifuss',1,3)], legit:false}
     ]
   };
   /* Rätsel 4 (Kreis-Zuordnung): 12 Felder im Kreis (6 Begriff/Bild-Paare),
@@ -1237,10 +1263,12 @@
       team:'',
       solved:{p1:false,p2:false,p3:false,p4:false},
       p3sets:{1:false,2:false,3:false},
-      bonusLink:''
+      bonusLink:'',
+      startedAt:null
     };
   };
   var state = defaultState();
+  var TIME_LIMIT_SEC = 25*60;
 
   function loadState(){
     try{
@@ -1292,8 +1320,10 @@
   $('#btn-start').addEventListener('click', function(){
     var name = $('#team-name-input').value.trim();
     state.team = name;
+    if(!state.startedAt) state.startedAt = Date.now();
     saveState();
     updateTeamChip();
+    updateTimer();
     showScreen('screen-hub');
   });
 
@@ -1320,6 +1350,28 @@
 
   function updateTeamChip(){
     $('#team-chip').textContent = 'Team: ' + (state.team ? state.team : '—');
+  }
+
+  function formatTime(sec){
+    sec = Math.max(0, Math.round(sec));
+    var m = Math.floor(sec/60), s = sec%60;
+    return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  }
+
+  function updateTimer(){
+    var chip = $('#timer-chip');
+    if(!chip) return;
+    var digits = chip.querySelector('.digits');
+    if(!state.startedAt){
+      digits.textContent = formatTime(TIME_LIMIT_SEC);
+      chip.classList.remove('warn','danger');
+      return;
+    }
+    var remaining = TIME_LIMIT_SEC - (Date.now() - state.startedAt)/1000;
+    if(remaining < 0) remaining = 0;
+    digits.textContent = formatTime(remaining);
+    chip.classList.toggle('warn', remaining <= 300 && remaining > 60);
+    chip.classList.toggle('danger', remaining <= 60);
   }
 
   function updateProgressDots(){
@@ -1488,14 +1540,14 @@
     });
     $('#success-2').classList.remove('show');
     $('#p2-final').hidden = true;
-    $('#sum-input').value='';
+    $('#p2-code-input').value='';
     if(state.solved.p2) fillP2Solved();
   }
 
   function fillP2Solved(){
     revealP2Solution();
-    $('#sum-input').value = SUM_TARGET;
-    $('#sum-input').disabled = true;
+    $('#p2-code-input').value = CODES.p2;
+    $('#p2-code-input').disabled = true;
     $('#p2-final').hidden = false;
     setCodeCapsule('code-cap-2', CODES.p2, true);
   }
@@ -1528,43 +1580,28 @@
   function revealP2Solution(){
     var strip = $('#solution-strip');
     strip.innerHTML = '';
-    SOLUTION_TOKENS.forEach(function(tok){
-      if(tok.sp){
-        var gap = document.createElement('span');
-        gap.className='gap';
-        strip.appendChild(gap);
-        return;
-      }
+    STATEMENTS.forEach(function(st){
       var box = document.createElement('span');
       box.className = 'letter filled';
-      box.textContent = tok.g !== undefined ? tok.g : STATEMENTS[tok.b].symbol;
+      box.textContent = st.symbol;
       strip.appendChild(box);
-    });
-
-    var ref = $('#periodic-ref');
-    ref.innerHTML = '';
-    Object.keys(ATOMIC).sort(function(a,b){return ATOMIC[a]-ATOMIC[b];}).forEach(function(sym){
-      var cell = document.createElement('div');
-      cell.className='pt-cell';
-      cell.innerHTML = '<div class="z">'+ATOMIC[sym]+'</div><div class="sym">'+sym+'</div>';
-      ref.appendChild(cell);
     });
   }
 
-  $('#btn-check-sum').addEventListener('click', function(){
-    var val = parseInt($('#sum-input').value,10);
-    var fb = $('#feedback-sum');
+  $('#btn-check-p2code').addEventListener('click', function(){
+    var val = $('#p2-code-input').value.trim();
+    var fb = $('#feedback-p2code');
     fb.classList.add('show');
-    if(val === SUM_TARGET){
+    if(val === String(CODES.p2)){
       fb.textContent = 'Richtig!';
       fb.className='feedback show ok';
-      $('#sum-input').disabled = true;
+      $('#p2-code-input').disabled = true;
       $('#p2-final').hidden = false;
       state.solved.p2 = true;
       saveState();
       setCodeCapsule('code-cap-2', CODES.p2, true);
     } else {
-      fb.textContent = 'Noch nicht richtig — zählt noch einmal nach.';
+      fb.textContent = 'Noch nicht richtig — überlegt noch einmal, was die Zeichen bedeuten könnten.';
       fb.className='feedback show bad';
     }
   });
@@ -1683,8 +1720,7 @@
     opts = opts || {};
     var srcTiles = setDef.tiles;
     var marker = setDef.marker || 'circle';
-    var n = srcTiles.length;
-    var tiles = srcTiles.map(function(t, i){ return { key:'t'+i, halves: t.halves }; });
+    var tiles = srcTiles.map(function(t, i){ return { key:'t'+i, halves: t.halves, legit: t.legit !== false }; });
     var preSolved = !!opts.preSolved;
     var placed = {}; // key -> true
 
@@ -1712,25 +1748,32 @@
     container.appendChild(chainScroll);
     if(!preSolved) container.appendChild(resetBtn);
 
-    function orderedHalves(t){
-      var h = t.halves.slice();
-      h.sort(function(x,y){ return (x.cell[1]*1000+x.cell[0]) - (y.cell[1]*1000+y.cell[0]); });
-      return h;
+    /* Wirksame Rasterzellen je gelegtem Stein (parallel zu t.halves).
+       Echte Steine liegen immer auf ihren festen Zellen. Ein Ablenker
+       übernimmt beim Anlegen die Zellen des echten Steins, dessen Platz er
+       einnimmt — er sitzt also sichtbar direkt an der Nahtstelle, an die er
+       (fälschlich) angelegt wurde, und blockiert diesen Platz. */
+    var cellsOf = {};
+    function defaultCells(t){ return t.halves.map(function(h){ return h.cell; }); }
+    function ck(c){ return c[0]+','+c[1]; }
+
+    function orderedPairs(t, cells){
+      var p = t.halves.map(function(h, i){ return {h:h, c:cells[i]}; });
+      p.sort(function(a,b){ return (a.c[1]*1000+a.c[0]) - (b.c[1]*1000+b.c[0]); });
+      return p;
     }
-    function isVertical(t){
-      var h = orderedHalves(t);
-      return h[0].cell[0] === h[1].cell[0];
-    }
+    function isVerticalCells(cells){ return cells[0][0] === cells[1][0]; }
     function halfHtml(h){
       if(h.type === 'img'){
         return '<div class="half t-icon"><svg><use href="#'+h.icon+'"/></svg></div>';
       }
       return '<div class="half t-text">'+h.label+'</div>';
     }
-    function tileHtml(t){
-      var h = orderedHalves(t);
-      var vert = isVertical(t);
-      return halfHtml(h[0]) + '<div class="seam '+(vert?'seam-h':'seam-v')+'"></div>' + halfHtml(h[1]);
+    function tileHtml(t, cells){
+      cells = cells || defaultCells(t);
+      var p = orderedPairs(t, cells);
+      var vert = isVerticalCells(cells);
+      return halfHtml(p[0].h) + '<div class="seam '+(vert?'seam-h':'seam-v')+'"></div>' + halfHtml(p[1].h);
     }
 
     function renderPool(order){
@@ -1738,11 +1781,11 @@
       order.forEach(function(t){
         var btn = document.createElement('button');
         btn.type='button';
-        btn.className = 'domino-tile-btn' + (isVertical(t) ? ' vert' : '');
+        btn.className = 'domino-tile-btn' + (isVerticalCells(defaultCells(t)) ? ' vert' : '');
         btn.dataset.key = t.key;
         btn.innerHTML = tileHtml(t);
-        var h = orderedHalves(t);
-        btn.setAttribute('aria-label', h[0].label+' / '+h[1].label);
+        var p = orderedPairs(t, defaultCells(t));
+        btn.setAttribute('aria-label', p[0].h.label+' / '+p[1].h.label);
         btn.addEventListener('click', function(){ attemptPlace(t, btn); });
         pool.appendChild(btn);
       });
@@ -1753,21 +1796,72 @@
       return false;
     }
 
-    function isPlaceable(t){
-      if(!anyPlaced()) return true;
-      return t.halves.some(function(h){
-        return tiles.some(function(other){
-          if(other.key===t.key || !placed[other.key]) return false;
-          return other.halves.some(function(oh){ return oh.id===h.id; });
-        });
+    function conceptCounts(){
+      // Wie oft kommt jede Konzept-Kennung unter den gelegten Hälften vor?
+      // Genau 1 = "offene" Nahtstelle, an die als Nächstes angelegt werden kann.
+      var counts = {};
+      tiles.forEach(function(tt){
+        if(!placed[tt.key]) return;
+        tt.halves.forEach(function(h){ counts[h.id] = (counts[h.id]||0) + 1; });
       });
+      return counts;
+    }
+
+    function occupiedCells(){
+      var o = {};
+      tiles.forEach(function(tt){
+        if(!placed[tt.key]) return;
+        cellsOf[tt.key].forEach(function(c){ o[ck(c)] = true; });
+      });
+      return o;
+    }
+
+    function targetCells(t){
+      if(t.legit) return defaultCells(t);
+      // Ablenker: Er nimmt den Platz eines noch nicht gelegten echten Steins
+      // ein, der dieselbe Kennung trägt (bevorzugt gleicher Typ Bild/Begriff).
+      var occ = occupiedCells();
+      for(var i = 0; i < t.halves.length; i++){
+        var sh = t.halves[i];
+        var cands = [];
+        tiles.forEach(function(lt){
+          if(!lt.legit || placed[lt.key]) return;
+          lt.halves.forEach(function(lh, j){ if(lh.id === sh.id) cands.push({tile:lt, j:j}); });
+        });
+        cands = cands.filter(function(c){
+          return c.tile.halves.every(function(h){ return !occ[ck(h.cell)]; });
+        });
+        if(!cands.length) continue;
+        cands.sort(function(a,b){
+          return (b.tile.halves[b.j].type === sh.type) - (a.tile.halves[a.j].type === sh.type);
+        });
+        var c = cands[0], cells = [];
+        cells[i] = c.tile.halves[c.j].cell;
+        cells[1-i] = c.tile.halves[1-c.j].cell;
+        return cells;
+      }
+      return null;
+    }
+
+    function isPlaceable(t){
+      var cells = targetCells(t);
+      if(!cells) return false;
+      // Belegte Plätze sind belegt — auch der echte Stein kommt nicht mehr
+      // hin, wenn dort schon ein Ablenker liegt.
+      var occ = occupiedCells();
+      if(cells.some(function(c){ return occ[ck(c)]; })) return false;
+      // Erster Stein: freie Wahl.
+      if(!anyPlaced()) return true;
+      // Danach muss mindestens eine Hälfte an eine offene Nahtstelle passen.
+      var open = conceptCounts();
+      return t.halves.some(function(h){ return open[h.id] === 1; });
     }
 
     function boundsOfPlaced(){
       var xs=[], ys=[];
       tiles.forEach(function(t){
         if(!placed[t.key]) return;
-        t.halves.forEach(function(h){ xs.push(h.cell[0]); ys.push(h.cell[1]); });
+        cellsOf[t.key].forEach(function(c){ xs.push(c[0]); ys.push(c[1]); });
       });
       if(!xs.length) return null;
       return {minX:Math.min.apply(null,xs), maxX:Math.max.apply(null,xs), minY:Math.min.apply(null,ys), maxY:Math.max.apply(null,ys)};
@@ -1786,30 +1880,36 @@
 
       tiles.forEach(function(t){
         if(!placed[t.key]) return;
-        var h = orderedHalves(t);
-        var vert = isVertical(t);
-        var x0 = Math.min(h[0].cell[0], h[1].cell[0]) - b.minX;
-        var y0 = Math.min(h[0].cell[1], h[1].cell[1]) - b.minY;
+        var cells = cellsOf[t.key];
+        var vert = isVerticalCells(cells);
+        var x0 = Math.min(cells[0][0], cells[1][0]) - b.minX;
+        var y0 = Math.min(cells[0][1], cells[1][1]) - b.minY;
         var el = document.createElement('div');
         el.className = 'chain-tile2' + (vert ? ' vert' : '');
         el.style.left = (x0*CELL_W) + 'px';
         el.style.top = (y0*CELL_H) + 'px';
         el.style.width = (vert ? CELL_W : CELL_W*2) + 'px';
         el.style.height = (vert ? CELL_H*2 : CELL_H) + 'px';
-        el.innerHTML = tileHtml(t);
+        el.innerHTML = tileHtml(t, cells);
         chainArea.appendChild(el);
       });
 
+      // Markierung nur an echten, direkt benachbarten Nahtstellen.
       var conceptMap = {};
       tiles.forEach(function(t){
         if(!placed[t.key]) return;
-        t.halves.forEach(function(h){
-          (conceptMap[h.id] = conceptMap[h.id] || []).push({tileKey:t.key, cell:h.cell});
+        t.halves.forEach(function(h, i){
+          (conceptMap[h.id] = conceptMap[h.id] || []).push({tileKey:t.key, legit:t.legit, cell:cellsOf[t.key][i]});
         });
       });
       Object.keys(conceptMap).forEach(function(id){
         var occ = conceptMap[id];
         if(occ.length !== 2 || occ[0].tileKey === occ[1].tileKey) return;
+        // Wie beim Papier-Domino: Das Symbol entsteht nur an einer
+        // wirklich passenden Naht — an einem Ablenker gibt es keins.
+        if(!occ[0].legit || !occ[1].legit) return;
+        var dx = Math.abs(occ[0].cell[0]-occ[1].cell[0]), dy = Math.abs(occ[0].cell[1]-occ[1].cell[1]);
+        if(dx + dy !== 1) return;
         var cx = ((occ[0].cell[0]+occ[1].cell[0])/2 - b.minX + 0.5) * CELL_W;
         var cy = ((occ[0].cell[1]+occ[1].cell[1])/2 - b.minY + 0.5) * CELL_H;
         var m = document.createElement('span');
@@ -1826,22 +1926,25 @@
         setTimeout(function(){ btn.classList.remove('wrong'); }, 400);
         return;
       }
+      cellsOf[t.key] = targetCells(t);
       placed[t.key] = true;
       btn.remove();
       renderChain();
-      var count = 0;
-      for(var k in placed){ if(placed[k]) count++; }
-      if(count === n && opts.onComplete) opts.onComplete();
+      // Fertig nur, wenn wirklich alle ECHTEN Steine liegen.
+      var allLegitPlaced = tiles.filter(function(tt){ return tt.legit; })
+        .every(function(tt){ return placed[tt.key]; });
+      if(allLegitPlaced && opts.onComplete) opts.onComplete();
     }
 
     resetBtn.addEventListener('click', function(){
       placed = {};
+      cellsOf = {};
       renderChain();
       renderPool(shuffle(tiles));
     });
 
     if(preSolved){
-      tiles.forEach(function(t){ placed[t.key] = true; });
+      tiles.forEach(function(t){ if(t.legit){ placed[t.key] = true; cellsOf[t.key] = defaultCells(t); } });
       renderChain();
       if(opts.onComplete) opts.onComplete();
     } else {
@@ -2048,6 +2151,8 @@
   --------------------------------------------------------------- */
   loadState();
   updateTeamChip();
+  updateTimer();
+  setInterval(updateTimer, 1000);
   if(state.team) $('#team-name-input').value = state.team;
   renderP1();
   renderP2();
