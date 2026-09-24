@@ -276,44 +276,74 @@
     gap:16px;
   }
   @media (max-width:560px){.hub-grid{grid-template-columns:1fr;}}
-  .station{
-    text-align:left;
-    background:var(--panel);
-    border:1.5px solid var(--line);
-    border-radius:var(--radius);
-    padding:18px;
-    cursor:pointer;
-    display:flex;flex-direction:column;gap:10px;
-    box-shadow:var(--shadow);
-    transition:transform .12s ease, border-color .12s ease;
-    position:relative;
-    overflow:hidden;
-  }
-  .station:hover{transform:translateY(-2px);border-color:var(--accent);}
-  .station:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
-  .station .icon-wrap{
-    width:46px;height:46px;border-radius:12px;
-    background:var(--paper-2);display:flex;align-items:center;justify-content:center;
-    color:var(--accent);flex:none;
-  }
-  .station .icon-wrap svg{width:26px;height:26px;}
-  .station.solved .icon-wrap{background:var(--lab-soft);color:var(--lab);}
-  .station h3{font-size:1.2rem;}
-  .station p{margin:0;font-size:.86rem;}
-  .station .code-slot{
-    font-family:var(--font-mono);font-weight:700;font-size:1.1rem;
-    letter-spacing:.12em;color:var(--ink-soft);
-  }
-  .station.solved .code-slot{color:var(--lab);}
-  .station .stamp{
-    position:absolute;top:12px;right:14px;
-    font-family:var(--font-mono);font-size:.68rem;font-weight:700;
-    letter-spacing:.08em;text-transform:uppercase;
-    padding:3px 9px;border-radius:999px;
-    background:var(--paper-2);color:var(--ink-soft);
-    border:1px solid var(--line);
-  }
-  .station.solved .stamp{background:var(--lab-soft);color:var(--lab);border-color:var(--lab);}
+  /* ============ HUB: Point-&-Click-Szene ============ */
+  .scene-wrap{border:1.5px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper-2);box-shadow:var(--shadow);}
+  .lab-scene{display:block;width:100%;height:auto;}
+  .lab-scene text{font-family:var(--font-body);}
+  .sc-wall{fill:var(--paper-2);}
+  .sc-floor{fill:var(--paper);}
+  .sc-edge{stroke:var(--ink);stroke-width:3;}
+  .sc-tiles path,.sc-floorlines path{stroke:var(--line);stroke-width:2;fill:none;}
+  .sc-deco path{stroke:var(--ink);stroke-width:3;fill:none;}
+  .sc-deco .sc-lamp{fill:var(--gold-soft);}
+  .sc-fill{fill:var(--panel);stroke:var(--ink);stroke-width:3;stroke-linejoin:round;}
+  .sc-line{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+  .sc-line.thin{stroke-width:2;}
+  .sc-glass{fill:var(--lab-soft);stroke:var(--ink);stroke-width:2.5;}
+  .sc-drawers rect{fill:var(--paper-2);stroke:var(--ink);stroke-width:2.5;}
+  .sc-items{color:var(--lab);}
+  .sc-items.dim{color:var(--ink-soft);}
+  .sc-sky{fill:var(--lab-soft);}
+  .sc-sun{fill:var(--gold-soft);stroke:var(--gold);stroke-width:2.5;}
+  .sc-cloud{fill:var(--panel);}
+  .sc-frame{fill:none;stroke:var(--ink);stroke-width:3.5;stroke-linecap:round;}
+  .sc-tick{stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;}
+  .sc-board{fill:#2f4a3c;stroke:var(--ink);stroke-width:5;}
+  .lab-scene .sc-chalk{fill:#e9f1e6;font-size:20px;font-weight:700;}
+  .lab-scene .sc-chalk.big{font-size:24px;font-style:italic;}
+  .sc-chalkline path{stroke:#e9f1e6;stroke-width:2.5;fill:none;stroke-linecap:round;opacity:.85;}
+  .sc-accentbar{fill:var(--accent);}
+  .lab-scene .sc-postertitle{fill:var(--accent-ink);font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-anchor:middle;}
+  .sc-coat{fill:var(--panel);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round;}
+  .sc-worktop{fill:var(--ink-soft);}
+  .sc-chest{fill:var(--gold-soft);stroke:var(--gold);stroke-width:3;stroke-linejoin:round;}
+  .sc-chestband{stroke:var(--gold);stroke-width:3;}
+  .sc-lock{fill:var(--gold);}
+  .sc-keyhole{fill:var(--panel);}
+  .sc-keyhole-line{stroke:var(--panel);stroke-width:2.5;stroke-linecap:round;}
+  .sc-hazard{fill:var(--gold-soft);stroke:var(--ink);stroke-width:3;}
+  .lab-scene .sc-label{fill:var(--ink);font-size:9.5px;font-weight:700;text-anchor:middle;}
+  .sc-exit{fill:var(--lab);}
+  .lab-scene .sc-exittext{fill:var(--panel);font-family:var(--font-mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-anchor:middle;}
+  .hotspot{cursor:pointer;outline:none;}
+  .hs-outline{fill:transparent;stroke:var(--accent);stroke-width:3;stroke-dasharray:9 7;opacity:0;transition:opacity .15s;}
+  .hotspot:hover .hs-outline,.hotspot:focus-visible .hs-outline{opacity:1;}
+  .hotspot:focus-visible .hs-outline{stroke:var(--gold);stroke-width:4;}
+  .hs-badge{display:none;}
+  .hotspot.solved .hs-badge{display:inline;}
+  .hs-badge circle{fill:var(--lab);stroke:var(--panel);stroke-width:3;}
+  .hs-badge path{fill:none;stroke:var(--panel);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;}
+  .hotspot.chest.ready .hs-outline{opacity:1;stroke:var(--lab);stroke-dasharray:none;animation:chest-pulse 1.4s ease-in-out infinite;}
+  @keyframes chest-pulse{0%,100%{stroke-opacity:1;}50%{stroke-opacity:.25;}}
+  @media (prefers-reduced-motion:reduce){.hotspot.chest.ready .hs-outline{animation:none;}}
+  .scene-note{margin-top:12px;min-height:2.6em;padding:10px 14px;border-radius:var(--radius-sm);background:var(--paper-2);border:1px dashed var(--line);font-size:.92rem;color:var(--ink);}
+  .inventory{margin-top:16px;}
+  .inv-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px;}
+  @media (max-width:560px){.inv-slots{grid-template-columns:repeat(2,1fr);}}
+  .inv-slot{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:var(--radius-sm);border:1.5px dashed var(--line);background:var(--panel);}
+  .inv-label{font-size:.76rem;font-weight:700;color:var(--ink-soft);}
+  .inv-code{font-family:var(--font-mono);font-weight:700;font-size:1.1rem;letter-spacing:.14em;color:var(--ink-soft);}
+  .inv-slot.found{border-style:solid;border-color:var(--lab);background:var(--lab-soft);}
+  .inv-slot.found .inv-label,.inv-slot.found .inv-code{color:var(--lab);}
+
+  /* ============ Materialschrank (Rätsel 1) ============ */
+  .drawer-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:12px 0 16px;padding:12px;border-radius:var(--radius-sm);background:var(--paper-2);border:3px solid var(--ink-soft);}
+  @media (max-width:560px){.drawer-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
+  @media (max-width:380px){.drawer-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+  .drawer{position:relative;background:var(--panel);border:1.5px solid var(--line);border-radius:6px;padding:8px 6px 14px;text-align:center;min-width:0;}
+  .drawer::after{content:"";position:absolute;left:35%;right:35%;bottom:5px;height:3px;border-radius:2px;background:var(--ink-soft);}
+  .drawer .dnum{font-family:var(--font-mono);font-weight:700;font-size:1.1rem;color:var(--gold);}
+  .drawer .dlabel{font-size:.68rem;font-weight:600;color:var(--ink-soft);line-height:1.2;margin-top:2px;hyphens:auto;overflow-wrap:anywhere;}
 
   .hub-footer-card{
     margin-top:18px;
@@ -496,7 +526,6 @@
     font-family:var(--font-mono);font-weight:700;font-size:22px;
     fill:var(--ink-soft);text-anchor:middle;dominant-baseline:middle;
   }
-  .circle-num.hit{fill:var(--gold);font-size:28px;}
   .circle-node{
     position:absolute;transform:translate(-50%,-50%);
     width:108px;padding:8px 7px;
@@ -791,7 +820,7 @@
         <span class="dot" data-p="4"></span>
       </div>
       <span class="team-chip" id="team-chip">Team: —</span>
-      <span class="team-chip timer-chip" id="timer-chip" aria-label="Verbleibende Zeit"><svg><use href="#ic-clock"/></svg><span class="digits">25:00</span></span>
+      <span class="team-chip timer-chip" id="timer-chip" aria-label="Verbleibende Zeit"><svg><use href="#ic-clock"/></svg><span class="digits">30:00</span></span>
     </div>
   </header>
 
@@ -828,52 +857,194 @@
       </div>
     </section>
 
-    <!-- ======================= HUB ======================= -->
+    <!-- ======================= HUB: Point & Click-Labor ======================= -->
     <section class="screen" id="screen-hub" hidden>
       <div class="card">
         <div class="puzzle-head">
           <div>
-            <div class="eyebrow">Forscherwerkstatt · Übersicht</div>
-            <h2 style="font-size:1.7rem;">Wählt ein Rätsel</h2>
+            <div class="eyebrow">Forscherwerkstatt</div>
+            <h2 style="font-size:1.7rem;">Seht euch im Labor um</h2>
           </div>
           <button class="btn ghost" id="btn-reset" title="Fortschritt zurücksetzen">Neu starten</button>
         </div>
-        <div class="hub-grid" style="margin-top:16px;">
-          <button class="station" data-target="screen-p1" id="station-1">
-            <span class="stamp">Rätsel 1</span>
-            <span class="icon-wrap"><svg><use href="#ic-pencil"/></svg></span>
-            <h3>Einführung Laborgeräte</h3>
-            <p>Lückentext: Setzt die passenden Laborgeräte ein.</p>
-            <span class="code-slot" id="code-slot-1">— — —</span>
-          </button>
-          <button class="station" data-target="screen-p2" id="station-2">
-            <span class="stamp">Rätsel 2</span>
-            <span class="icon-wrap"><svg><use href="#ic-spool"/></svg></span>
-            <h3>Verhalten im Chemieraum</h3>
-            <p>Wahr oder falsch? Und was sagt das Periodensystem dazu?</p>
-            <span class="code-slot" id="code-slot-2">— — —</span>
-          </button>
-          <button class="station" data-target="screen-p3" id="station-3">
-            <span class="stamp">Rätsel 3</span>
-            <span class="icon-wrap"><svg><use href="#ic-puzzle"/></svg></span>
-            <h3>Laborgeräte &amp; Gefahrensymbole</h3>
-            <p>Drei Zuordnungsspiele: Begriff trifft Bild.</p>
-            <span class="code-slot" id="code-slot-3">— — —</span>
-          </button>
-          <button class="station" data-target="screen-p4" id="station-4">
-            <span class="stamp">Rätsel 4</span>
-            <span class="icon-wrap"><svg><use href="#ic-bulb"/></svg></span>
-            <h3>Regeln im Chemieraum</h3>
-            <p>Ordnet Regeln und Piktogramme richtig zu.</p>
-            <span class="code-slot" id="code-slot-4">— — —</span>
-          </button>
+        <p style="margin-top:0;">In diesem Raum verbergen sich vier Rätsel. Klickt alles an, was euch verdächtig vorkommt. Die Schatzkiste öffnet sich erst, wenn ihr alle vier Codes habt.</p>
+
+        <div class="scene-wrap">
+          <svg class="lab-scene" viewBox="0 0 1000 600" role="group" aria-label="Das Labor — klickbare Gegenstände">
+            <!-- Raum -->
+            <rect class="sc-wall" x="0" y="0" width="1000" height="522"/>
+            <g class="sc-tiles">
+              <path d="M0 260H1000M0 300H1000"/>
+            </g>
+            <rect class="sc-floor" x="0" y="522" width="1000" height="78"/>
+            <path class="sc-edge" d="M0 522H1000"/>
+            <g class="sc-floorlines"><path d="M60 522L20 600M200 522L180 600M340 522L340 600M480 522L500 600M620 522L660 600M760 522L820 600M900 522L980 600"/></g>
+
+            <!-- Deckenlampen -->
+            <g class="sc-deco">
+              <path d="M340 0V22M680 0V22"/>
+              <path class="sc-lamp" d="M318 22H362L372 38H308Z"/>
+              <path class="sc-lamp" d="M658 22H702L712 38H648Z"/>
+            </g>
+
+            <!-- Fenster (Ablenker) -->
+            <g class="hotspot decoy" data-note="Draußen ist schönes Wetter. Aber raus kommt ihr hier nur durch die Tür." data-name="Fenster" tabindex="0" role="button" aria-label="Fenster ansehen">
+              <rect class="hs-outline" x="626" y="54" width="140" height="176" rx="10"/>
+              <rect class="sc-sky" x="636" y="64" width="120" height="152" rx="3"/>
+              <circle class="sc-sun" cx="720" cy="100" r="14"/>
+              <path class="sc-cloud" d="M652 150a12 12 0 0122-6 10 10 0 0118 6z"/>
+              <rect class="sc-frame" x="636" y="64" width="120" height="152" rx="3"/>
+              <path class="sc-frame" d="M696 64V216M636 140H756"/>
+              <path class="sc-frame" d="M628 222H764"/>
+            </g>
+
+            <!-- Wanduhr (Ablenker) -->
+            <g class="hotspot decoy" data-note="Die Uhr tickt. Behaltet die Zeit oben rechts im Blick!" data-name="Wanduhr" tabindex="0" role="button" aria-label="Wanduhr ansehen">
+              <rect class="hs-outline" x="782" y="104" width="84" height="84" rx="42"/>
+              <circle class="sc-fill" cx="824" cy="146" r="34"/>
+              <path class="sc-line" d="M824 146V124M824 146L840 156"/>
+              <path class="sc-tick" d="M824 116v5M824 171v5M794 146h5M849 146h5"/>
+            </g>
+
+            <!-- Rätsel 1: Materialschrank -->
+            <g class="hotspot" data-target="screen-p1" data-n="1" data-name="Materialschrank" tabindex="0" role="button" aria-label="Materialschrank untersuchen">
+              <rect class="hs-outline" x="20" y="80" width="180" height="450" rx="10"/>
+              <rect class="sc-fill" x="30" y="90" width="160" height="432" rx="6"/>
+              <rect class="sc-glass" x="42" y="102" width="66" height="196" rx="3"/>
+              <rect class="sc-glass" x="112" y="102" width="66" height="196" rx="3"/>
+              <path class="sc-line thin" d="M42 170H108M112 170H178M42 236H108M112 236H178"/>
+              <g class="sc-items">
+                <use href="#ic-erlenmeyer" x="46" y="134" width="34" height="34"/>
+                <use href="#ic-becherglas" x="76" y="138" width="30" height="30"/>
+                <use href="#ic-becherglas" x="116" y="138" width="30" height="30"/>
+                <use href="#ic-erlenmeyer" x="142" y="134" width="34" height="34"/>
+                <use href="#ic-dreifuss" x="50" y="202" width="32" height="32"/>
+                <use href="#ic-drahtnetz" x="120" y="206" width="28" height="28"/>
+                <use href="#ic-pistill" x="146" y="206" width="28" height="28"/>
+                <use href="#ic-trichter" x="52" y="262" width="30" height="30"/>
+                <use href="#ic-spatel" x="126" y="262" width="30" height="30"/>
+              </g>
+              <path class="sc-line" d="M104 190v14M116 190v14"/>
+              <g class="sc-drawers">
+                <rect x="42" y="312" width="66" height="44" rx="3"/><rect x="112" y="312" width="66" height="44" rx="3"/>
+                <rect x="42" y="362" width="66" height="44" rx="3"/><rect x="112" y="362" width="66" height="44" rx="3"/>
+                <rect x="42" y="412" width="66" height="44" rx="3"/><rect x="112" y="412" width="66" height="44" rx="3"/>
+                <rect x="42" y="462" width="66" height="44" rx="3"/><rect x="112" y="462" width="66" height="44" rx="3"/>
+              </g>
+              <path class="sc-line" d="M66 334h18M136 334h18M66 384h18M136 384h18M66 434h18M136 434h18M66 484h18M136 484h18"/>
+              <g class="hs-badge" transform="translate(186 96)"><circle r="17"/><path d="M-7 0l5 5 9-10"/></g>
+            </g>
+
+            <!-- Rätsel 2: Tafel -->
+            <g class="hotspot" data-target="screen-p2" data-n="2" data-name="Tafel" tabindex="0" role="button" aria-label="Tafel untersuchen">
+              <rect class="hs-outline" x="202" y="50" width="278" height="200" rx="10"/>
+              <rect class="sc-board" x="212" y="60" width="258" height="168" rx="5"/>
+              <text class="sc-chalk big" x="232" y="96">Stimmt das?</text>
+              <g class="sc-chalkline">
+                <path d="M234 124c20-4 40 3 60-1s40 2 62-1"/>
+                <path d="M234 154c24-3 44 3 66-1s30 2 48 0"/>
+                <path d="M234 184c18-3 36 3 54 0s34 2 52-1"/>
+              </g>
+              <text class="sc-chalk" x="398" y="130">✓</text><text class="sc-chalk" x="430" y="130">✗</text>
+              <text class="sc-chalk" x="398" y="160">✓</text><text class="sc-chalk" x="430" y="160">✗</text>
+              <text class="sc-chalk" x="398" y="190">✓</text><text class="sc-chalk" x="430" y="190">✗</text>
+              <rect class="sc-fill" x="222" y="228" width="238" height="8" rx="2"/>
+              <g class="hs-badge" transform="translate(466 66)"><circle r="17"/><path d="M-7 0l5 5 9-10"/></g>
+            </g>
+
+            <!-- Rätsel 4: Laborordnung + Kittel -->
+            <g class="hotspot" data-target="screen-p4" data-n="4" data-name="Laborordnung" tabindex="0" role="button" aria-label="Laborordnung untersuchen">
+              <rect class="hs-outline" x="490" y="52" width="128" height="280" rx="10"/>
+              <rect class="sc-fill" x="498" y="60" width="112" height="140" rx="4"/>
+              <rect class="sc-accentbar" x="498" y="60" width="112" height="24" rx="4"/>
+              <text class="sc-postertitle" x="554" y="77">LABORORDNUNG</text>
+              <g class="sc-items">
+                <use href="#ic-goggles" x="508" y="92" width="40" height="40"/>
+                <use href="#ic-no-food" x="560" y="92" width="40" height="40"/>
+                <use href="#ic-waft" x="508" y="146" width="40" height="40"/>
+                <use href="#ic-no-taste" x="560" y="146" width="40" height="40"/>
+              </g>
+              <path class="sc-line" d="M544 214h20M554 214v8"/>
+              <path class="sc-coat" d="M541 226h26l6 9 14 10-7 14-9-6v54a4 4 0 01-4 4h-26a4 4 0 01-4-4v-54l-9 6-7-14 14-10z"/>
+              <path class="sc-line thin" d="M554 235v26"/>
+              <rect class="sc-line thin" x="540" y="276" width="10" height="10" rx="1"/>
+              <rect class="sc-line thin" x="558" y="276" width="10" height="10" rx="1"/>
+              <g class="hs-badge" transform="translate(606 66)"><circle r="17"/><path d="M-7 0l5 5 9-10"/></g>
+            </g>
+
+            <!-- Arbeitstisch -->
+            <rect class="sc-worktop" x="196" y="338" width="566" height="16" rx="3"/>
+            <rect class="sc-fill" x="210" y="354" width="538" height="168"/>
+            <path class="sc-line" d="M344 354V522M478 354V522M612 354V522"/>
+            <path class="sc-line" d="M330 430v22M358 430v22M464 430v22M492 430v22M598 430v22M626 430v22"/>
+
+            <!-- Deko auf dem Tisch -->
+            <g class="sc-items dim">
+              <use href="#ic-brenner" x="214" y="270" width="72" height="72"/>
+              <use href="#ic-dreifuss" x="286" y="282" width="58" height="58"/>
+              <use href="#ic-erlenmeyer" x="352" y="292" width="46" height="46"/>
+            </g>
+
+            <!-- Waschbecken (Ablenker) -->
+            <g class="hotspot decoy" data-note="Ein Waschbecken. Nach dem Experimentieren: Hände waschen! Einen Code gibt es hier aber nicht." data-name="Waschbecken" tabindex="0" role="button" aria-label="Waschbecken ansehen">
+              <rect class="hs-outline" x="620" y="262" width="130" height="86" rx="10"/>
+              <path class="sc-fill" d="M634 338h104l-8 8h-88z"/>
+              <path class="sc-line" d="M700 338v-52a14 14 0 00-28 0v10"/>
+              <path class="sc-line" d="M664 296h16"/>
+              <path class="sc-line" d="M712 324h14M719 324v14"/>
+            </g>
+
+            <!-- Schatzkiste (Schloss) -->
+            <g class="hotspot chest" data-target="screen-lock" data-name="Schatzkiste" tabindex="0" role="button" aria-label="Schatzkiste öffnen">
+              <rect class="hs-outline" x="404" y="252" width="130" height="94" rx="10"/>
+              <path class="sc-chest" d="M414 292l6-20q2-6 8-6h82q6 0 8 6l6 20z"/>
+              <rect class="sc-chest" x="414" y="292" width="110" height="46" rx="4"/>
+              <path class="sc-chestband" d="M436 268v70M502 268v70"/>
+              <rect class="sc-lock" x="459" y="284" width="20" height="20" rx="3"/>
+              <circle class="sc-keyhole" cx="469" cy="292" r="3"/>
+              <path class="sc-keyhole-line" d="M469 294v5"/>
+            </g>
+
+            <!-- Rätsel 3: Gefahrstoffschrank -->
+            <g class="hotspot" data-target="screen-p3" data-n="3" data-name="Gefahrstoffschrank" tabindex="0" role="button" aria-label="Gefahrstoffschrank untersuchen">
+              <rect class="hs-outline" x="766" y="232" width="112" height="298" rx="10"/>
+              <rect class="sc-hazard" x="776" y="242" width="92" height="280" rx="4"/>
+              <path class="sc-line" d="M822 252V512"/>
+              <g>
+                <use href="#ic-ghs-entzuendlich" x="780" y="264" width="40" height="40"/>
+                <use href="#ic-ghs-aetzend" x="824" y="264" width="40" height="40"/>
+                <use href="#ic-ghs-giftig" x="780" y="312" width="40" height="40"/>
+                <use href="#ic-ghs-umwelt" x="824" y="312" width="40" height="40"/>
+              </g>
+              <path class="sc-line" d="M814 400v30M830 400v30"/>
+              <rect class="sc-fill" x="782" y="462" width="80" height="22" rx="3"/>
+              <text class="sc-label" x="822" y="477">Gefahrstoffe</text>
+              <g class="hs-badge" transform="translate(862 248)"><circle r="17"/><path d="M-7 0l5 5 9-10"/></g>
+            </g>
+
+            <!-- Tür (Ablenker) -->
+            <rect class="sc-exit" x="894" y="52" width="84" height="26" rx="3"/>
+            <text class="sc-exittext" x="936" y="70">AUSGANG</text>
+            <g class="hotspot decoy" data-note="Abgeschlossen. Den Schlüssel findet ihr bestimmt in der Schatzkiste …" data-name="Tür" tabindex="0" role="button" aria-label="Tür ansehen">
+              <rect class="hs-outline" x="878" y="82" width="116" height="446" rx="10"/>
+              <rect class="sc-fill" x="888" y="92" width="96" height="430" rx="3"/>
+              <rect class="sc-line thin" x="902" y="110" width="68" height="160" rx="3"/>
+              <rect class="sc-line thin" x="902" y="300" width="68" height="200" rx="3"/>
+              <path class="sc-line" d="M898 316h20"/>
+              <rect class="sc-lock" x="900" y="326" width="10" height="16" rx="2"/>
+            </g>
+          </svg>
         </div>
-        <div class="hub-footer-card">
-          <div>
-            <strong>Alle vier Codes gesammelt?</strong>
-            <div style="font-size:.88rem;color:var(--ink-soft);">Dann ab zur Schatzkiste — dort werden sie addiert.</div>
+        <div class="scene-note" id="scene-note" aria-live="polite">Tipp: Fahrt mit der Maus über den Raum oder tippt Gegenstände an.</div>
+
+        <div class="inventory">
+          <div class="eyebrow">Notizzettel · gefundene Codes</div>
+          <div class="inv-slots">
+            <div class="inv-slot" id="inv-1"><span class="inv-label" id="inv-label-1">???</span><span class="inv-code" id="code-slot-1">— — —</span></div>
+            <div class="inv-slot" id="inv-2"><span class="inv-label" id="inv-label-2">???</span><span class="inv-code" id="code-slot-2">— — —</span></div>
+            <div class="inv-slot" id="inv-3"><span class="inv-label" id="inv-label-3">???</span><span class="inv-code" id="code-slot-3">— — —</span></div>
+            <div class="inv-slot" id="inv-4"><span class="inv-label" id="inv-label-4">???</span><span class="inv-code" id="code-slot-4">— — —</span></div>
           </div>
-          <button class="btn lab" id="btn-to-lock"><svg style="width:18px;height:18px;"><use href="#ic-chest"/></svg> Zur Schatzkiste</button>
         </div>
       </div>
     </section>
@@ -881,7 +1052,7 @@
     <!-- ======================= PUZZLE 1 ======================= -->
     <section class="screen" id="screen-p1" hidden>
       <div class="card">
-        <button class="btn ghost back-btn">← Zur Übersicht</button>
+        <button class="btn ghost back-btn">← Zurück ins Labor</button>
         <div class="puzzle-head" style="margin-top:14px;">
           <div>
             <div class="eyebrow">Rätsel 1 · Einführung Laborgeräte</div>
@@ -898,17 +1069,17 @@
         </div>
         <div class="success-panel" id="success-1">
           <h3>Alle Begriffe richtig! 🎉</h3>
-          <p>Jedes Gerät hat im Materialschrank eine eigene Schrank-Nummer. Ermittelt sie und addiert alle 14 Nummern:</p>
-          <div class="periodic-ref" id="cabinet-ref"></div>
+          <p>Ihr öffnet den Materialschrank. Jedes Gerät hat hier seine eigene, nummerierte Schublade. Der Code dieses Rätsels steckt in den Schubladen der Geräte, die ihr in die Lücken eingesetzt habt.</p>
+          <div class="drawer-grid" id="cabinet-ref"></div>
           <div class="sum-row">
-            <label for="cabinet-sum-input"><strong>Summe der Schrank-Nummern:</strong></label>
-            <input type="number" id="cabinet-sum-input" inputmode="numeric">
+            <label for="cabinet-sum-input"><strong>Code:</strong></label>
+            <input type="text" inputmode="numeric" maxlength="3" id="cabinet-sum-input" style="width:90px;letter-spacing:.2em;">
             <button class="btn accent" id="btn-check-cabinet">Prüfen</button>
             <span class="feedback" id="feedback-cabinet"></span>
           </div>
           <div id="p1-final" hidden>
-            <p>Richtig! Der Code lautet <strong class="mono">106</strong>.</p>
-            <button class="btn lab back-btn">Zurück zur Übersicht</button>
+            <p>Richtig! Der Code lautet <strong class="mono">127</strong>.</p>
+            <button class="btn lab back-btn">Zurück ins Labor</button>
           </div>
         </div>
       </div>
@@ -917,7 +1088,7 @@
     <!-- ======================= PUZZLE 2 ======================= -->
     <section class="screen" id="screen-p2" hidden>
       <div class="card">
-        <button class="btn ghost back-btn">← Zur Übersicht</button>
+        <button class="btn ghost back-btn">← Zurück ins Labor</button>
         <div class="puzzle-head" style="margin-top:14px;">
           <div>
             <div class="eyebrow">Rätsel 2 · Verhalten im Chemieraum</div>
@@ -948,7 +1119,7 @@
           </div>
           <div id="p2-final" hidden>
             <p>Richtig! Der Code lautet <strong class="mono">130</strong>.</p>
-            <button class="btn lab back-btn">Zurück zur Übersicht</button>
+            <button class="btn lab back-btn">Zurück ins Labor</button>
           </div>
         </div>
       </div>
@@ -957,7 +1128,7 @@
     <!-- ======================= PUZZLE 3 ======================= -->
     <section class="screen" id="screen-p3" hidden>
       <div class="card">
-        <button class="btn ghost back-btn">← Zur Übersicht</button>
+        <button class="btn ghost back-btn">← Zurück ins Labor</button>
         <div class="puzzle-head" style="margin-top:14px;">
           <div>
             <div class="eyebrow">Rätsel 3 · Laborgeräte &amp; Gefahrensymbole</div>
@@ -989,7 +1160,7 @@
           </div>
           <div id="p3-final" hidden>
             <p>Richtig! Der Code lautet <strong class="mono" id="code3-text">212</strong>.</p>
-            <button class="btn lab back-btn">Zurück zur Übersicht</button>
+            <button class="btn lab back-btn">Zurück ins Labor</button>
           </div>
         </div>
       </div>
@@ -998,7 +1169,7 @@
     <!-- ======================= PUZZLE 4 ======================= -->
     <section class="screen" id="screen-p4" hidden>
       <div class="card">
-        <button class="btn ghost back-btn">← Zur Übersicht</button>
+        <button class="btn ghost back-btn">← Zurück ins Labor</button>
         <div class="puzzle-head" style="margin-top:14px;">
           <div>
             <div class="eyebrow">Rätsel 4 · Regeln im Chemieraum</div>
@@ -1006,7 +1177,7 @@
           </div>
           <div class="code-capsule" id="code-cap-4"><svg style="width:16px;height:16px;"><use href="#ic-chest"/></svg><span class="digits">— — —</span></div>
         </div>
-        <p>Die Regeln und Piktogramme stehen im Kreis. Tippt zwei zusammengehörige Felder nacheinander an, um sie mit einer Linie zu verbinden — genau wie im Original mit Lineal und Stift. Sobald alle sechs Paare verbunden sind: Drei Zahlen in der Mitte werden dabei von <strong>zwei</strong> Linien gekreuzt. Lest sie von links nach rechts — das ist der Code.</p>
+        <p>Die Regeln und Piktogramme stehen im Kreis. Tippt zwei zusammengehörige Felder nacheinander an, um sie mit einer Linie zu verbinden. Sind alle sechs Paare verbunden, verrät euch das Linienbild den Code.</p>
         <div class="circle-wrap">
           <div class="circle-stage" id="circle-stage">
             <svg class="circle-svg" id="circle-svg" viewBox="0 0 800 800" width="800" height="800" aria-hidden="true">
@@ -1018,7 +1189,7 @@
         <button type="button" class="domino-reset" id="btn-reset-p4">Verbindungen zurücksetzen</button>
         <div class="success-panel" id="success-4" style="margin-top:20px;">
           <h3>Alle Paare verbunden! 🎉</h3>
-          <p>Welche drei Zahlen werden von zwei Linien gekreuzt (gold markiert)? Lest sie von links nach rechts und gebt den dreistelligen Code ein:</p>
+          <p>Schaut euch genau an, wo eure Linien verlaufen. Welcher dreistellige Code versteckt sich zwischen den Zahlen? (von links nach rechts gelesen)</p>
           <div class="sum-row">
             <label for="p4-code-input"><strong>Code:</strong></label>
             <input type="text" inputmode="numeric" maxlength="3" id="p4-code-input" style="width:90px;letter-spacing:.2em;">
@@ -1027,7 +1198,7 @@
           </div>
           <div id="p4-final" hidden>
             <p>Richtig! Der Code lautet <strong class="mono">982</strong>.</p>
-            <button class="btn lab back-btn">Zurück zur Übersicht</button>
+            <button class="btn lab back-btn">Zurück ins Labor</button>
           </div>
         </div>
       </div>
@@ -1036,7 +1207,7 @@
     <!-- ======================= LOCK ======================= -->
     <section class="screen" id="screen-lock" hidden>
       <div class="card" style="text-align:center;">
-        <button class="btn ghost back-btn" style="float:left;">← Zur Übersicht</button>
+        <button class="btn ghost back-btn" style="float:left;">← Zurück ins Labor</button>
         <div class="eyebrow">Die Schatzkiste</div>
         <h2 style="font-size:1.8rem;margin:6px 0 14px;">Addiert die vier Codes</h2>
         <div class="collect-row" id="collect-row"></div>
@@ -1095,7 +1266,7 @@
         </div>
         <div class="btn-row no-print" style="margin-top:16px;">
           <button class="btn accent" id="btn-print-cert">Urkunde drucken</button>
-          <button class="btn ghost back-btn">Zurück zur Übersicht</button>
+          <button class="btn ghost back-btn">Zurück ins Labor</button>
         </div>
       </div>
     </section>
@@ -1126,7 +1297,7 @@
   /* ---------------------------------------------------------------
      DATA
   --------------------------------------------------------------- */
-  var CODES = { p1:106, p2:130, p3:212, p4:982 };
+  var CODES = { p1:127, p2:130, p3:212, p4:982 };
 
   var BLANK_ANSWERS = ["Laborgeräte","Dreifuß","Drahtnetz","Becherglas","Erlenmeyerkolben",
     "Messzylinder","Mörser","Pistill","Reagenzglas","Spatellöffel","Reagenzglashalter",
@@ -1153,9 +1324,20 @@
   // Elementsymbole sind, und die Summe der Ordnungszahlen bilden (Code wird
   // nicht mehr direkt vorgerechnet, s. u.).
 
-  // Schrank-Nummern je Lücke (gleiche Reihenfolge wie BLANK_ANSWERS) — Summe 106
-  var CABINET_NUMBERS = [3,9,5,8,11,7,4,6,10,5,9,12,8,9];
-  var CABINET_TARGET = CABINET_NUMBERS.reduce(function(a,b){return a+b;},0); // 106
+  /* Materialschrank (Rätsel 1): 20 Schubladen, jede mit genau einem Gerät
+     (Nummern also eindeutig). 13 davon sind Geräte, die in die Lücken
+     gehören ("Laborgeräte" ist kein Gerät, hat also keine Schublade); 7 sind
+     Ablenker — darunter der Brenner, der im Text zwar vorkommt, aber in keine
+     Lücke gehört. Code = Summe der Schubladen der eingesetzten Geräte = 127.
+     Dass addiert werden muss, wird bewusst NICHT gesagt (typischer Fehlweg:
+     alle 20 addieren = 210). */
+  var CABINET = ['Erlenmeyerkolben','Tiegelzange','Reagenzglas','Drahtnetz','Schutzbrille',
+    'Verbrennungslöffel','Mörser','Reagenzglashalter','Brenner','Reagenzglasbürste',
+    'Dreifuß','Pistill','Trichter','Spatellöffel','Pipette',
+    'Becherglas','Reagenzglasständer','Uhrglas','Messzylinder','Abdampfschale'];
+  var CABINET_TARGET = CABINET.reduce(function(sum, label, i){
+    return sum + (BLANK_ANSWERS.indexOf(label) !== -1 ? i+1 : 0);
+  }, 0); // 127 === CODES.p1
 
   /* Domino-Steine (Rätsel 3): jede Seite ist entweder ein Begriff (TH) oder ein
      Bild (IH) desselben Gegenstands, jeweils mit fester Rasterposition [x,y] —
@@ -1268,7 +1450,7 @@
     };
   };
   var state = defaultState();
-  var TIME_LIMIT_SEC = 25*60;
+  var TIME_LIMIT_SEC = 30*60;
 
   function loadState(){
     try{
@@ -1311,11 +1493,25 @@
     b.addEventListener('click', function(){ showScreen('screen-hub'); });
   });
 
-  $all('.station').forEach(function(b){
-    b.addEventListener('click', function(){ showScreen(b.dataset.target); });
+  // Point-&-Click: Gegenstände im Labor
+  var sceneNote = $('#scene-note');
+  var NOTE_DEFAULT = sceneNote.textContent;
+  $all('.hotspot').forEach(function(h){
+    function activate(){
+      if(h.dataset.target){ showScreen(h.dataset.target); }
+      else if(h.dataset.note){ sceneNote.textContent = h.dataset.note; }
+    }
+    h.addEventListener('click', activate);
+    h.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activate(); }
+    });
+    function hint(){ if(!h.dataset.note) sceneNote.textContent = h.dataset.name + ' — anklicken zum Untersuchen'; }
+    h.addEventListener('mouseenter', hint);
+    h.addEventListener('focus', hint);
+    h.addEventListener('mouseleave', function(){
+      if(!h.dataset.note && sceneNote.textContent.indexOf(h.dataset.name) === 0) sceneNote.textContent = NOTE_DEFAULT;
+    });
   });
-
-  $('#btn-to-lock').addEventListener('click', function(){ showScreen('screen-lock'); });
 
   $('#btn-start').addEventListener('click', function(){
     var name = $('#team-name-input').value.trim();
@@ -1381,17 +1577,21 @@
     });
   }
 
+  var HOT_NAMES = {1:'Materialschrank', 2:'Tafel', 3:'Gefahrstoffschrank', 4:'Laborordnung'};
   function updateHub(){
     updateProgressDots();
+    var all = true;
     [1,2,3,4].forEach(function(n){
-      var st = state.solved['p'+n];
-      var stationEl = $('#station-'+n);
-      var slot = $('#code-slot-'+n);
-      var stamp = stationEl.querySelector('.stamp');
-      stationEl.classList.toggle('solved', st);
-      slot.textContent = st ? String(CODES['p'+n]) : '— — —';
-      stamp.textContent = st ? 'Gelöst' : 'Rätsel '+n;
+      var st = !!state.solved['p'+n];
+      if(!st) all = false;
+      var hs = document.querySelector('.hotspot[data-n="'+n+'"]');
+      if(hs) hs.classList.toggle('solved', st);
+      $('#code-slot-'+n).textContent = st ? String(CODES['p'+n]) : '— — —';
+      $('#inv-label-'+n).textContent = st ? HOT_NAMES[n] : '???';
+      $('#inv-'+n).classList.toggle('found', st);
     });
+    var chest = document.querySelector('.hotspot.chest');
+    if(chest) chest.classList.toggle('ready', all);
   }
 
   /* ---------------------------------------------------------------
@@ -1435,11 +1635,11 @@
   function renderCabinetRef(){
     var ref = $('#cabinet-ref');
     ref.innerHTML = '';
-    BLANK_ANSWERS.forEach(function(word, i){
-      var cell = document.createElement('div');
-      cell.className='pt-cell wide';
-      cell.innerHTML = '<div class="z">'+(i+1)+'.</div><div class="sym">'+CABINET_NUMBERS[i]+'</div><div class="wordlabel">'+word+'</div>';
-      ref.appendChild(cell);
+    CABINET.forEach(function(label, i){
+      var d = document.createElement('div');
+      d.className = 'drawer';
+      d.innerHTML = '<div class="dnum">'+(i+1)+'</div><div class="dlabel">'+label+'</div>';
+      ref.appendChild(d);
     });
   }
 
@@ -1482,10 +1682,10 @@
   });
 
   $('#btn-check-cabinet').addEventListener('click', function(){
-    var val = parseInt($('#cabinet-sum-input').value,10);
+    var val = $('#cabinet-sum-input').value.trim();
     var fb = $('#feedback-cabinet');
     fb.classList.add('show');
-    if(val === CABINET_TARGET){
+    if(val === String(CABINET_TARGET)){
       fb.textContent = 'Richtig!';
       fb.className='feedback show ok';
       $('#cabinet-sum-input').disabled = true;
@@ -1495,7 +1695,7 @@
       setCodeCapsule('code-cap-1', CODES.p1, true);
       updateHub();
     } else {
-      fb.textContent = 'Noch nicht richtig — zählt noch einmal nach.';
+      fb.textContent = 'Das ist nicht der richtige Code.';
       fb.className='feedback show bad';
     }
   });
@@ -1626,8 +1826,7 @@
     CIRCLE4.numbers.forEach(function(n){
       var t = document.createElementNS('http://www.w3.org/2000/svg','text');
       t.setAttribute('x', n.x); t.setAttribute('y', n.y);
-      t.setAttribute('class', 'circle-num' + (preSolved && n.target ? ' hit' : ''));
-      if(n.target) t.dataset.target = '1';
+      t.setAttribute('class', 'circle-num');
       t.textContent = n.val;
       numsG.appendChild(t);
     });
@@ -1640,7 +1839,7 @@
     }
     function markNumbersHit(){
       $all('.circle-num', numsG).forEach(function(el){
-        if(el.dataset.target) el.classList.add('hit');
+        /* bewusst keine Hervorhebung mehr — die Kreuzungspunkte sollen selbst entdeckt werden */
       });
     }
 
@@ -2053,7 +2252,7 @@
       setCodeCapsule('code-cap-4', CODES.p4, true);
       updateHub();
     } else {
-      fb.textContent = 'Noch nicht richtig — schaut euch die golden markierten Zahlen noch einmal genau an.';
+      fb.textContent = 'Noch nicht richtig — schaut euch das Linienbild noch einmal genau an.';
       fb.className='feedback show bad';
     }
   });
