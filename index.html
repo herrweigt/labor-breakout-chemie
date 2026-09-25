@@ -252,6 +252,9 @@
   }
   .goal-box .row{display:flex;justify-content:space-between;gap:10px;padding:3px 0;}
   .intro-hero .stack p{margin:0;}
+  .hint-box{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;padding:12px 14px;border-radius:var(--radius-sm);background:var(--gold-soft);border:1px solid var(--gold);color:var(--ink);font-size:.92rem;line-height:1.45;animation:rise .35s ease both;}
+  .hint-box svg{width:22px;height:22px;flex:none;color:var(--gold);margin-top:1px;}
+  @media (prefers-reduced-motion:reduce){.hint-box{animation:none;}}
   .story-note{
     position:relative;align-self:start;
     background:var(--panel);border:1px solid var(--line);border-radius:6px;
@@ -1119,6 +1122,10 @@
           <h3>Alle Aussagen richtig bewertet! 🎉</h3>
           <div class="solution-strip" id="solution-strip"></div>
           <p>Das sind eure neun richtig gewählten Zeichen, in der Reihenfolge der Aussagen. Was fällt euch auf? Ermittelt daraus den dreistelligen Code:</p>
+          <div class="hint-box" id="p2-hint" hidden role="status">
+            <svg aria-hidden="true"><use href="#ic-bulb"/></svg>
+            <div><strong>Tipp:</strong> Die Zeichen sind keine gewöhnlichen Buchstaben, sondern Elementsymbole. Schaut im Periodensystem nach, welche Zahl zu jedem dieser Elemente gehört.</div>
+          </div>
           <div class="sum-row">
             <label for="p2-code-input"><strong>Code:</strong></label>
             <input type="text" inputmode="numeric" maxlength="3" id="p2-code-input" style="width:90px;letter-spacing:.2em;">
@@ -1455,7 +1462,9 @@
       solved:{p1:false,p2:false,p3:false,p4:false},
       p3sets:{1:false,2:false,3:false},
       bonusLink:'',
-      startedAt:null
+      startedAt:null,
+      p2OpenedAt:null, // erster Aufruf von Rätsel 2 (für den Zeit-Tipp)
+      p2Fails:0        // Fehlversuche beim Code von Rätsel 2
     };
   };
   var state = defaultState();
@@ -1496,6 +1505,8 @@
     window.scrollTo({top:0, behavior:'smooth'});
     if(id==='screen-hub') updateHub();
     if(id==='screen-lock') renderLock();
+    if(id==='screen-p2' && !state.p2OpenedAt){ state.p2OpenedAt = Date.now(); saveState(); }
+    if(id==='screen-p2') updateP2Hint();
   }
 
   $all('.back-btn').forEach(function(b){
@@ -1812,8 +1823,23 @@
     } else {
       fb.textContent = 'Noch nicht richtig — überlegt noch einmal, was die Zeichen bedeuten könnten.';
       fb.className='feedback show bad';
+      state.p2Fails = (state.p2Fails||0) + 1;
+      saveState();
     }
+    updateP2Hint();
   });
+
+  /* Tipp für Rätsel 2: erscheint nach 3 falschen Codes ODER 5 Minuten nach
+     dem ersten Öffnen des Rätsels (Uhrzeit-basiert, übersteht also auch ein
+     Neuladen der Seite oder einen Abstecher ins Labor). */
+  var P2_HINT_FAILS = 3, P2_HINT_SEC = 5*60;
+  function updateP2Hint(){
+    var box = $('#p2-hint');
+    if(!box) return;
+    var due = (state.p2Fails||0) >= P2_HINT_FAILS ||
+      (!!state.p2OpenedAt && (Date.now() - state.p2OpenedAt)/1000 >= P2_HINT_SEC);
+    box.hidden = !(due && !state.solved.p2);
+  }
 
   /* ---------------------------------------------------------------
      KREIS-ZUORDNUNG (Rätsel 4): 12 Felder im Kreis anklicken (erst Begriff/
@@ -2361,6 +2387,7 @@
   updateTeamChip();
   updateTimer();
   setInterval(updateTimer, 1000);
+  setInterval(updateP2Hint, 1000);
   if(state.team) $('#team-name-input').value = state.team;
   renderP1();
   renderP2();
